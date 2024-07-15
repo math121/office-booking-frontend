@@ -16,3 +16,11 @@ export type PostBooking = {
   officeId: number | undefined;
   userId: number | undefined;
 };
+
+export type BookingDetails = {
+  id: number;
+  startDate: string;
+  endDate: string;
+  office: Office;
+  userObk: number;
+};

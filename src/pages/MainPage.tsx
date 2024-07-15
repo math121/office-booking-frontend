@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Office } from "../utils/types";
 import { useRouterState } from "@tanstack/react-router";
 
-export const MainOfficeBkPage = () => {
+export const MainPage = () => {
   const userId = useRouterState({
     select: (s) => s.location.state.userState?.id,
   });

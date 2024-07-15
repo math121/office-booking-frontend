@@ -10,6 +10,7 @@ export const Navigation = () => {
         {loginData.loggedIn == true && (
           <Link onClick={() => location.reload()}>Log out</Link>
         )}
+        {loginData.loggedIn == true && <Link to="/myPage">My Page</Link>}
       </div>
       <Outlet />
     </>
