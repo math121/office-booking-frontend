@@ -9,3 +9,9 @@ export type Login = {
   username: string;
   password: string;
 };
+
+export type PostBooking = {
+  startDate: string;
+  endDate: string;
+  officeId: number;
+};

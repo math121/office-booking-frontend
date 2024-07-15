@@ -15,7 +15,10 @@ export const OfficeCard = ({ office }: { office: Office }) => {
     if (loginData.loggedIn == false) {
       navigate({ to: "/login" });
     } else {
-      navigate({ to: "/booking" });
+      navigate({
+        to: "/newBooking",
+        state: { bookingState: { officeId: office.id } },
+      });
     }
   };
   return (

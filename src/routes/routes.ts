@@ -22,7 +22,7 @@ const loginPage = createRoute({
 
 const bookingPage = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/booking",
+  path: "/newBooking",
   component: BookingPage,
 });
 
