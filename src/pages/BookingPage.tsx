@@ -6,8 +6,8 @@ import { useRouterState } from "@tanstack/react-router";
 import { PostBooking } from "../utils/types";
 
 export const BookingPage = () => {
-  const officeId = useRouterState({
-    select: (s) => s.location.state.bookingState?.officeId,
+  const office = useRouterState({
+    select: (s) => s.location.state.bookingState?.office,
   });
 
   const { control, handleSubmit } = useForm<PostBooking>();
@@ -19,7 +19,7 @@ export const BookingPage = () => {
     const postData: PostBooking = {
       startDate: startDate,
       endDate: endDate,
-      officeId: officeId,
+      officeId: office.id,
     };
 
     fetch("http://localhost:8080/api/bookings", {
@@ -33,14 +33,8 @@ export const BookingPage = () => {
 
   return (
     <>
-      <h1>Office name</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam itaque
-        quod neque blanditiis animi, perspiciatis placeat deleniti nulla
-        asperiores molestiae, veritatis aliquam voluptates consectetur sed
-        distinctio amet magni rem nam? Nihil rem provident iure. Commodi
-        molestiae dicta harum assumenda esse?
-      </p>
+      <h1>{office.officeName}</h1>
+      <p>{office.description}</p>
 
       <form onSubmit={handleSubmit(submitBooking)}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>

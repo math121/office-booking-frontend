@@ -1,6 +1,7 @@
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routes/routes.ts";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { Office } from "./utils/types.ts";
 
 const router = createRouter({ routeTree });
 
@@ -10,7 +11,7 @@ declare module "@tanstack/react-router" {
   }
 
   interface HistoryState {
-    bookingState: { officeId: number };
+    bookingState: { office: Office };
   }
 }
 

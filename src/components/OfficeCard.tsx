@@ -17,7 +17,7 @@ export const OfficeCard = ({ office }: { office: Office }) => {
     } else {
       navigate({
         to: "/newBooking",
-        state: { bookingState: { officeId: office.id } },
+        state: { bookingState: { office: office } },
       });
     }
   };
