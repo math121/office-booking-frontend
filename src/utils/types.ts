@@ -4,3 +4,8 @@ export type Office = {
   location: string;
   description: string;
 };
+
+export type Login = {
+  username: string;
+  password: string;
+};

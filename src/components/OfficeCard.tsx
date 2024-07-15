@@ -6,8 +6,18 @@ import {
   Button,
 } from "@mui/material";
 import { Office } from "../utils/types";
+import loginData from "../utils/login.json";
+import { useNavigate } from "@tanstack/react-router";
 
 export const OfficeCard = ({ office }: { office: Office }) => {
+  const navigate = useNavigate();
+  const redirect = () => {
+    if (loginData.loggedIn == false) {
+      navigate({ to: "/login" });
+    } else {
+      navigate({ to: "/booking" });
+    }
+  };
   return (
     <>
       <Card sx={{ maxWidth: 300, border: "solid 2px" }}>
@@ -22,7 +32,7 @@ export const OfficeCard = ({ office }: { office: Office }) => {
           <p>{office.description}</p>
         </CardContent>
         <CardActions>
-          <Button>Book now</Button>
+          <Button onClick={redirect}>Book now</Button>
         </CardActions>
       </Card>
     </>
