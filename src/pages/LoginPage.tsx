@@ -12,16 +12,15 @@ export const LoginPage = () => {
   } = useForm<Login>();
 
   const login: SubmitHandler<Login> = (data) => {
-    if (
-      loginData.username == data.username &&
-      loginData.password == data.password
-    ) {
-      loginData.loggedIn = true;
-      console.log("logged in");
-      navigate({ to: "/" });
-    } else {
-      console.log("nope");
-    }
+    fetch(
+      `http://localhost:8080/user/login?username=${data.username}&password=${data.username}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        loginData.loggedIn = true;
+        console.log("logged in");
+        navigate({ to: "/", state: { userState: { id: data.id } } });
+      });
   };
   return (
     <>

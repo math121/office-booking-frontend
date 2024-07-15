@@ -1,8 +1,13 @@
 import { OfficeCard } from "../components/OfficeCard";
 import { useQuery } from "@tanstack/react-query";
 import { Office } from "../utils/types";
+import { useRouterState } from "@tanstack/react-router";
 
 export const MainOfficeBkPage = () => {
+  const userId = useRouterState({
+    select: (s) => s.location.state.userState?.id,
+  });
+
   function getAllOffices() {
     return fetch("http://localhost:8080/api/offices")
       .then((response) => response.json())
@@ -23,7 +28,7 @@ export const MainOfficeBkPage = () => {
       {!isLoading &&
         data.length != 0 &&
         data.map((value: Office) => (
-          <OfficeCard key={value.id} office={value} />
+          <OfficeCard key={value.id} office={value} userId={userId} />
         ))}
     </>
   );

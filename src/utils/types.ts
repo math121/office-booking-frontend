@@ -13,5 +13,6 @@ export type Login = {
 export type PostBooking = {
   startDate: string;
   endDate: string;
-  officeId: number;
+  officeId: number | undefined;
+  userId: number | undefined;
 };
