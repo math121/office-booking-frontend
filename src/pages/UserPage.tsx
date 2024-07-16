@@ -60,7 +60,11 @@ export const UserPage = () => {
           {!isLoading &&
             data.length != 0 &&
             data.map((value: BookingDetails) => (
-              <ViewBookingCard key={value.id} bookingDetails={value} />
+              <ViewBookingCard
+                key={value.id}
+                bookingDetails={value}
+                timePeriod={timePeriod}
+              />
             ))}
         </TabPanel>
       </TabContext>

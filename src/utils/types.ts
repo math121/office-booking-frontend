@@ -24,3 +24,8 @@ export type BookingDetails = {
   office: Office;
   userObk: number;
 };
+
+export type DateEdit = {
+  startDate: string;
+  endDate: string;
+};

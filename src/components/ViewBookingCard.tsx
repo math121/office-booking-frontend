@@ -1,16 +1,18 @@
 import { Card, CardActions, CardContent, Button } from "@mui/material";
 import { BookingDetails } from "../utils/types";
+import { EditBooking } from "./EditBooking";
 
 export const ViewBookingCard = ({
   bookingDetails,
+  timePeriod,
 }: {
   bookingDetails: BookingDetails;
+  timePeriod: string;
 }) => {
-  const editBooking = () => {
-    console.log("edit");
-  };
   const deleteBooking = () => {
-    console.log("delete");
+    fetch(`http://localhost:8080/api/bookings/${bookingDetails.id}`, {
+      method: "DELETE",
+    }).then((response) => console.log(response.json()));
   };
   return (
     <div>
@@ -32,10 +34,13 @@ export const ViewBookingCard = ({
             </div>
           </div>
         </CardContent>
-        <CardActions>
-          <Button onClick={editBooking}>Edit</Button>
-          <Button onClick={deleteBooking}>Delete</Button>
-        </CardActions>
+        {timePeriod == "future" && (
+          <CardActions>
+            <EditBooking bookingDetails={bookingDetails} />
+
+            <Button onClick={deleteBooking}>Delete</Button>
+          </CardActions>
+        )}
       </Card>
     </div>
   );
