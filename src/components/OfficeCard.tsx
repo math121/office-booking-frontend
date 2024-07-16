@@ -27,13 +27,14 @@ export const OfficeCard = ({
       });
     }
   };
+  console.log(office);
   return (
     <div>
       <Card sx={{ maxWidth: 300 }}>
         <CardMedia
           sx={{ height: 150 }}
           title="Office pic"
-          image="https://picsum.photos/id/25/200/300"
+          image={office.image}
         />
         <CardContent>
           <h3>{office.officeName}</h3>

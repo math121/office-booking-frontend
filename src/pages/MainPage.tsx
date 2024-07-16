@@ -25,7 +25,7 @@ export const MainPage = () => {
   return (
     <>
       <h1>Browse Offices</h1>
-      <div className="grid gap-5 place-content-center md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-5 place-content-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {!isLoading &&
           data.length != 0 &&
           data.map((value: Office) => (

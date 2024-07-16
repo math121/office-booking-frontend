@@ -95,7 +95,9 @@ export const EditBooking = ({
             <Button type="submit">Save</Button>
           </form>
 
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button fullWidth={true} onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
         </Box>
       </Modal>
     </div>

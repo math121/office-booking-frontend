@@ -3,6 +3,7 @@ export type Office = {
   officeName: string;
   location: string;
   description: string;
+  image: string;
 };
 
 export type Login = {
