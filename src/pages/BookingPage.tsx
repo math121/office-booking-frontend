@@ -53,8 +53,12 @@ export const BookingPage = () => {
     <>
       <h1>{office?.officeName}</h1>
       <p>{office?.description}</p>
+      <img src="https://picsum.photos/id/25/300/200" alt="office pic" />
 
-      <form onSubmit={handleSubmit(submitBooking)}>
+      <form
+        onSubmit={handleSubmit(submitBooking)}
+        className="flex flex-col gap-4"
+      >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Controller
             control={control}
@@ -78,7 +82,7 @@ export const BookingPage = () => {
           />
         </LocalizationProvider>
 
-        <input type="submit" />
+        <input className="w-5/12 h-8" type="submit" value="Book now" />
       </form>
     </>
   );

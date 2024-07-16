@@ -25,11 +25,13 @@ export const MainPage = () => {
   return (
     <>
       <h1>Browse Offices</h1>
-      {!isLoading &&
-        data.length != 0 &&
-        data.map((value: Office) => (
-          <OfficeCard key={value.id} office={value} userId={userId} />
-        ))}
+      <div className="grid gap-5 place-content-center md:grid-cols-2 lg:grid-cols-3">
+        {!isLoading &&
+          data.length != 0 &&
+          data.map((value: Office) => (
+            <OfficeCard key={value.id} office={value} userId={userId} />
+          ))}
+      </div>
     </>
   );
 };
