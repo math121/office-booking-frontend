@@ -23,7 +23,7 @@ export const MainPage = () => {
   });
 
   return (
-    <>
+    <div className="p-8">
       <h1>Browse Offices</h1>
       <div className="grid gap-5 place-content-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {!isLoading &&
@@ -32,6 +32,6 @@ export const MainPage = () => {
             <OfficeCard key={value.id} office={value} userId={userId} />
           ))}
       </div>
-    </>
+    </div>
   );
 };

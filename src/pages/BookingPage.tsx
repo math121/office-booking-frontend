@@ -50,14 +50,15 @@ export const BookingPage = () => {
   }, []);
 
   return (
-    <>
-      <h1>{office?.officeName}</h1>
-      <p>{office?.description}</p>
-      <img src="https://picsum.photos/id/25/300/200" alt="office pic" />
-
+    <div className="p-8 md:flex gap-20">
+      <div>
+        <h1>{office?.officeName}</h1>
+        <p>{office?.description}</p>
+        <img src={office?.image} alt="office pic" width={350} />
+      </div>
       <form
         onSubmit={handleSubmit(submitBooking)}
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 justify-end w-3/5"
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Controller
@@ -82,8 +83,8 @@ export const BookingPage = () => {
           />
         </LocalizationProvider>
 
-        <input className="w-5/12 h-8" type="submit" value="Book now" />
+        <input className="h-8" type="submit" value="Book now" />
       </form>
-    </>
+    </div>
   );
 };

@@ -14,8 +14,9 @@ export const ViewBookingCard = ({
       method: "DELETE",
     }).then((response) => console.log(response.json()));
   };
+
   return (
-    <div>
+    <div className="p-8">
       <Card>
         <CardContent>
           <h3>{bookingDetails.office.officeName}</h3>
@@ -26,18 +27,17 @@ export const ViewBookingCard = ({
             </div>
             <div className="flex  gap-2">
               <p className="font-bold">From: </p>
-              <p>{bookingDetails.startDate}</p>
+              <p>{new Date(bookingDetails.startDate).toLocaleString()}</p>
             </div>
             <div className="flex  gap-2">
               <p className="font-bold">To: </p>
-              <p>{bookingDetails.endDate}</p>
+              <p>{new Date(bookingDetails.endDate).toLocaleString()}</p>
             </div>
           </div>
         </CardContent>
         {timePeriod == "future" && (
           <CardActions>
             <EditBooking bookingDetails={bookingDetails} />
-
             <Button onClick={deleteBooking}>Delete</Button>
           </CardActions>
         )}

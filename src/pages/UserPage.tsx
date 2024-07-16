@@ -48,8 +48,8 @@ export const UserPage = () => {
   };
 
   return (
-    <>
-      <h1>My Page</h1>
+    <div className="p-8">
+      <h1>My Bookings</h1>
 
       <TabContext value={tabValue}>
         <TabList onChange={tabChange}>
@@ -68,6 +68,6 @@ export const UserPage = () => {
             ))}
         </TabPanel>
       </TabContext>
-    </>
+    </div>
   );
 };

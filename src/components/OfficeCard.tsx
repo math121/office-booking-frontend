@@ -38,7 +38,9 @@ export const OfficeCard = ({
         />
         <CardContent>
           <h3>{office.officeName}</h3>
-          <p>{office.location}</p>
+          <p>
+            <strong>Location:</strong> {office.location}
+          </p>
           <p>{office.description}</p>
         </CardContent>
         <CardActions>

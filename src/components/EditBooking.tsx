@@ -32,8 +32,6 @@ export const EditBooking = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  console.log(bookingDetails);
-
   const { control, handleSubmit } = useForm<DateEdit>();
 
   const saveBooking: SubmitHandler<DateEdit> = (data) => {
@@ -77,6 +75,7 @@ export const EditBooking = ({
                 render={({ field }) => (
                   <DateTimePicker
                     label="Start date"
+                    defaultValue={dayjs(bookingDetails.startDate)}
                     onChange={(startDate) => field.onChange(startDate)}
                   />
                 )}
@@ -87,6 +86,7 @@ export const EditBooking = ({
                 render={({ field }) => (
                   <DateTimePicker
                     label="End date"
+                    defaultValue={dayjs(bookingDetails.endDate)}
                     onChange={(endDate) => field.onChange(endDate)}
                   />
                 )}
