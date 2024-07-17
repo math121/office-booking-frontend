@@ -1,11 +1,12 @@
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { useRouterState } from "@tanstack/react-router";
 import { PostBooking } from "../utils/types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { Button } from "@mui/material";
 
 const dateFormat = "YYYY-MM-DDTHH:mm:ss";
 
@@ -16,6 +17,8 @@ export const BookingPage = () => {
     select: (s) => s.location.state.bookingState?.office,
   });
 
+  const [startDate, setStartDate] = useState<Dayjs | null>();
+
   const {
     control,
     handleSubmit,
@@ -25,6 +28,7 @@ export const BookingPage = () => {
   const submitBooking: SubmitHandler<PostBooking> = (data) => {
     const startDate = dayjs(data.startDate).format(dateFormat);
     const endDate = dayjs(data.endDate).format(dateFormat);
+    console.log(dayjs(data.endDate).isValid());
 
     const postData: PostBooking = {
       startDate: startDate,
@@ -51,8 +55,6 @@ export const BookingPage = () => {
     }
   }, []);
 
-  console.log(errors);
-
   return (
     <div className="p-8 md:flex gap-20">
       <div>
@@ -62,38 +64,70 @@ export const BookingPage = () => {
       </div>
       <form
         onSubmit={handleSubmit(submitBooking)}
-        className="flex flex-col gap-4 justify-end w-3/5"
+        className="flex flex-col justify-end"
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Controller
             control={control}
             name="startDate"
+            rules={{
+              required: "Required field",
+              validate: {
+                validDateCheck: (val) => dayjs(val).isValid() || "Invalid date",
+                pastDateCheck: (val) =>
+                  !dayjs(val).isBefore(dayjs()) || "Cannot choose past dates",
+              },
+            }}
             render={({ field }) => (
               <DateTimePicker
                 ampm={false}
                 disablePast={true}
                 label="Start date"
                 format="DD/MM/YYYY hh:mm"
-                onChange={(startDate) => field.onChange(startDate)}
+                onChange={(startDate) => {
+                  field.onChange(startDate);
+                  setStartDate(startDate);
+                }}
               />
             )}
           />
+          <p>{errors.startDate && errors.startDate.message}</p>
           <Controller
             control={control}
             name="endDate"
+            rules={{
+              required: "Required field",
+              validate: {
+                validDateCheck: (val) => dayjs(val).isValid() || "Invalid date",
+                pastDateCheck: (val) =>
+                  !dayjs(val).isBefore(dayjs()) || "Cannot choose past dates",
+                dateAfterStartDate: (val) =>
+                  (startDate != null && dayjs(val).isAfter(dayjs(startDate))) ||
+                  "End date must be after start date",
+              },
+            }}
             render={({ field }) => (
               <DateTimePicker
                 ampm={false}
                 disablePast={true}
                 label="End date"
                 format="DD/MM/YYYY hh:mm"
-                onChange={(endDate) => field.onChange(endDate)}
+                onChange={(endDate) => {
+                  field.onChange(endDate);
+                }}
               />
             )}
           />
+          <p>{errors.endDate && errors.endDate.message}</p>
         </LocalizationProvider>
 
-        <input className="h-8" type="submit" value="Book now" />
+        <Button
+          disabled={Object.keys(errors).length != 0}
+          type="submit"
+          variant="outlined"
+        >
+          Book now
+        </Button>
       </form>
     </div>
   );

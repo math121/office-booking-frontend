@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -7,7 +7,7 @@ import { BookingDetails } from "../utils/types";
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DateEdit } from "../utils/types";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const style = {
@@ -36,9 +36,18 @@ export const EditBooking = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { control, handleSubmit } = useForm<DateEdit>();
+  const [startDate, setStartDate] = useState<Dayjs>(
+    dayjs(bookingDetails.startDate)
+  );
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<DateEdit>();
 
   const saveBooking: SubmitHandler<DateEdit> = (data) => {
+    console.log(data);
     const startDate = dayjs(data.startDate).format(dateFormat);
     const endDate = dayjs(data.endDate).format(dateFormat);
 
@@ -62,11 +71,18 @@ export const EditBooking = ({
 
   return (
     <div>
-      <Button onClick={handleOpen}>Edit</Button>
+      <Button variant="outlined" onClick={handleOpen}>
+        Edit
+      </Button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Edit booking
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            className="pb-10"
+          >
+            Edit booking - {bookingDetails.office.officeName}
           </Typography>
 
           <form
@@ -76,6 +92,7 @@ export const EditBooking = ({
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <Controller
                 control={control}
+                defaultValue={bookingDetails.startDate}
                 name="startDate"
                 render={({ field }) => (
                   <DateTimePicker
@@ -85,13 +102,30 @@ export const EditBooking = ({
                     disablePast={true}
                     disabled={dayjs(bookingDetails.startDate) < dayjs()}
                     defaultValue={dayjs(bookingDetails.startDate)}
-                    onChange={(startDate) => field.onChange(startDate)}
+                    onChange={(startDate) => {
+                      field.onChange(startDate);
+                      setStartDate(dayjs(startDate));
+                    }}
                   />
                 )}
               />
               <Controller
                 control={control}
                 name="endDate"
+                defaultValue={bookingDetails.endDate}
+                rules={{
+                  required: "Required field",
+                  validate: {
+                    validDateCheck: (val) =>
+                      dayjs(val).isValid() || "Invalid date",
+                    pastDateCheck: (val) =>
+                      !dayjs(val).isBefore(dayjs()) ||
+                      "Cannot choose past dates",
+                    dateAfterStartDate: (val) =>
+                      dayjs(val).isAfter(startDate) ||
+                      "End date must be after start date",
+                  },
+                }}
                 render={({ field }) => (
                   <DateTimePicker
                     label="End date"
@@ -103,6 +137,7 @@ export const EditBooking = ({
                   />
                 )}
               />
+              {errors.endDate && <p>{errors.endDate.message}</p>}
             </LocalizationProvider>
             <Button type="submit">Save</Button>
           </form>
