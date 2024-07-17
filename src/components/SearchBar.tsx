@@ -31,7 +31,7 @@ export const SearchBar = ({
           <input
             type="search"
             id="default-search"
-            className="p-4 ps-10 text-sm rounded-lg text-black"
+            className="p-4 ps-10 text-sm rounded-lg text-black w-80"
             placeholder="Search location"
           />
           <button

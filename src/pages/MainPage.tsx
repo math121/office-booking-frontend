@@ -33,7 +33,7 @@ export const MainPage = () => {
         <SearchBar setFilterWord={setFilterWord} />
       </div>
 
-      <div className="grid gap-5 place-content-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid auto-rows-fr gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
         {!isLoading &&
           data.length != 0 &&
           data.map((value: Office) => (

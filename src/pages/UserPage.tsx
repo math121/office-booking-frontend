@@ -5,9 +5,13 @@ import { BookingDetails } from "../utils/types";
 import { ViewBookingCard } from "../components/ViewBookingCard";
 import { Tab } from "@mui/material";
 import { TabList, TabContext, TabPanel } from "@mui/lab";
+import { SearchBar } from "../components/SearchBar";
+
+const BASE_URL_BOOKING = "http://localhost:8080/api/bookings";
 
 export const UserPage = () => {
   const navigate = useNavigate();
+  const [filterLocation, setFilterLocation] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("loggedIn") == "false") {
@@ -21,7 +25,13 @@ export const UserPage = () => {
 
   function getBookings() {
     const userId = Number(localStorage.getItem("userId"));
-    return fetch(`http://localhost:8080/api/bookings/${timePeriod}/${userId}`)
+    let booking_url = BASE_URL_BOOKING + `/${timePeriod}/${userId}`;
+
+    if (filterLocation != "") {
+      booking_url += `/${filterLocation}`;
+    }
+
+    return fetch(booking_url)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -30,7 +40,7 @@ export const UserPage = () => {
   }
 
   const { data, isLoading } = useQuery({
-    queryKey: ["myBookings", trackChange, timePeriod],
+    queryKey: ["myBookings", trackChange, timePeriod, filterLocation],
     queryFn: getBookings,
   });
 
@@ -39,14 +49,19 @@ export const UserPage = () => {
     setTabValue(newValue);
     if (newValue == "1") {
       setTimePeriod("future");
+      setFilterLocation("");
     } else {
       setTimePeriod("past");
+      setFilterLocation("");
     }
   };
 
   return (
     <div className="p-8">
-      <h1>My Bookings</h1>
+      <div className="flex justify-between">
+        <h1>My Bookings</h1>
+        <SearchBar setFilterWord={setFilterLocation} />
+      </div>
 
       <TabContext value={tabValue}>
         <TabList onChange={tabChange}>

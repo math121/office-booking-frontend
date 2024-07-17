@@ -23,9 +23,9 @@ export const OfficeCard = ({ office }: { office: Office }) => {
 
   return (
     <div>
-      <Card sx={{ maxWidth: 300 }}>
+      <Card sx={{ maxWidth: 400 }}>
         <CardMedia
-          sx={{ height: 150 }}
+          sx={{ height: 250 }}
           title="Office pic"
           image={office.image}
         />
@@ -37,7 +37,19 @@ export const OfficeCard = ({ office }: { office: Office }) => {
           <p>{office.description}</p>
         </CardContent>
         <CardActions>
-          <Button onClick={redirect}>Book now</Button>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "#1E1B1A" }}
+            sx={{
+              marginLeft: "auto",
+              marginTop: "auto",
+              marginRight: 2,
+              marginBottom: 2,
+            }}
+            onClick={redirect}
+          >
+            Book now
+          </Button>
         </CardActions>
       </Card>
     </div>

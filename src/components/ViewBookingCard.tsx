@@ -52,7 +52,10 @@ export const ViewBookingCard = ({
               trackChange={trackChange}
               setTrackChange={setTrackChange}
             />
-            <DeleteDialog deleteBooking={deleteBooking} />
+            <DeleteDialog
+              deleteBooking={deleteBooking}
+              office={bookingDetails.office}
+            />
           </CardActions>
         )}
       </Card>

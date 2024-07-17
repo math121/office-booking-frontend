@@ -56,11 +56,15 @@ export const BookingPage = () => {
   }, []);
 
   return (
-    <div className="p-8 md:flex gap-20">
-      <div>
+    <div className="p-8 md:flex gap-10">
+      <div className="w-5/12">
         <h1>{office?.officeName}</h1>
         <p>{office?.description}</p>
-        <img src={office?.image} alt="office pic" width={350} />
+        <img
+          src={office?.image}
+          alt="office pic"
+          className="object-contain h-64 w-full pt-3"
+        />
       </div>
       <form
         onSubmit={handleSubmit(submitBooking)}
@@ -91,7 +95,9 @@ export const BookingPage = () => {
               />
             )}
           />
-          <p>{errors.startDate && errors.startDate.message}</p>
+          <p className="text-red-600">
+            {errors.startDate && errors.startDate.message}
+          </p>
           <Controller
             control={control}
             name="endDate"
@@ -118,13 +124,25 @@ export const BookingPage = () => {
               />
             )}
           />
-          <p>{errors.endDate && errors.endDate.message}</p>
+          <p className="text-red-600">
+            {errors.endDate && errors.endDate.message}
+          </p>
         </LocalizationProvider>
 
         <Button
           disabled={Object.keys(errors).length != 0}
           type="submit"
-          variant="outlined"
+          variant="contained"
+          sx={{
+            "&.Mui-disabled": {
+              backgroundColor: "gray",
+              color: "#C0C0C0",
+            },
+            backgroundColor: "black",
+            "&:hover": {
+              backgroundColor: "#404040",
+            },
+          }}
         >
           Book now
         </Button>

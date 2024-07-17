@@ -11,14 +11,13 @@ import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const style = {
+  borderRadius: "16px",
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
   p: 4,
 };
 const dateFormat = "YYYY-MM-DDTHH:mm:ss";
@@ -71,7 +70,12 @@ export const EditBooking = ({
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color="error"
+        onClick={handleOpen}
+        style={{ backgroundColor: "#1E1B1A" }}
+      >
         Edit
       </Button>
       <Modal open={open} onClose={handleClose}>
@@ -139,12 +143,25 @@ export const EditBooking = ({
               />
               {errors.endDate && <p>{errors.endDate.message}</p>}
             </LocalizationProvider>
-            <Button type="submit">Save</Button>
+            <div className="flex gap-24">
+              <Button
+                type="submit"
+                color="success"
+                variant="contained"
+                sx={{ width: 1 }}
+              >
+                Save
+              </Button>
+              <Button
+                onClick={() => setOpen(false)}
+                variant="contained"
+                style={{ backgroundColor: "#1E1B1A" }}
+                sx={{ width: 1 }}
+              >
+                Cancel
+              </Button>
+            </div>
           </form>
-
-          <Button fullWidth={true} onClick={() => setOpen(false)}>
-            Cancel
-          </Button>
         </Box>
       </Modal>
     </div>
