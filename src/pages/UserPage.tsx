@@ -7,6 +7,7 @@ import { Tab } from "@mui/material";
 import { TabList, TabContext, TabPanel } from "@mui/lab";
 import { SearchBar } from "../components/SearchBar";
 import { ToastContainer } from "react-toastify";
+import { LoadingFailPage } from "../components/LoadingFailPage";
 
 const BASE_URL_BOOKING = "http://localhost:8080/api/bookings";
 
@@ -18,6 +19,7 @@ export const UserPage = () => {
     if (localStorage.getItem("loggedIn") == "false") {
       navigate({ to: "/login" });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [timePeriod, setTimePeriod] = useState("future");
@@ -40,12 +42,12 @@ export const UserPage = () => {
       });
   }
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["myBookings", trackChange, timePeriod, filterLocation],
     queryFn: getBookings,
   });
 
-  const tabChange = (event: React.SyntheticEvent, newValue: string) => {
+  const tabChange = (_event: React.SyntheticEvent, newValue: string) => {
     console.log(timePeriod);
     setTabValue(newValue);
     if (newValue == "1") {
@@ -70,7 +72,10 @@ export const UserPage = () => {
           <Tab label="Previous bookings" value="2"></Tab>
         </TabList>
         <TabPanel value={tabValue}>
-          {!isLoading && data.length != 0 ? (
+          {!isLoading &&
+            !error &&
+            data &&
+            data.length != 0 &&
             data.map((value: BookingDetails) => (
               <ViewBookingCard
                 key={value.id}
@@ -79,10 +84,10 @@ export const UserPage = () => {
                 trackChange={trackChange}
                 setTrackChange={setTrackChange}
               />
-            ))
-          ) : (
-            <p>There are no bookings</p>
-          )}
+            ))}
+          {data && data.length == 0 && <p>There are no bookings</p>}
+          {isLoading && <LoadingFailPage message="Loading..." />}
+          {error && <LoadingFailPage message={error.message} />}
         </TabPanel>
       </TabContext>
       <ToastContainer />

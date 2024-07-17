@@ -57,6 +57,7 @@ export const BookingPage = () => {
     if (localStorage.getItem("loggedIn") == "false") {
       navigate({ to: "/login" });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

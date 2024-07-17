@@ -29,7 +29,7 @@ export const ViewBookingCard = ({
 
   return (
     <div className="p-8">
-      <Card className="p-3">
+      <Card className="p-3" sx={{ borderLeft: 2 }}>
         <CardContent>
           <h3>{bookingDetails.office.officeName}</h3>
           <div className="flex gap-10">
