@@ -1,4 +1,4 @@
-import { Card, CardActions, CardContent, Button } from "@mui/material";
+import { Card, CardActions, CardContent } from "@mui/material";
 import { BookingDetails } from "../utils/types";
 import { EditBooking } from "./EditBooking";
 import { DeleteDialog } from "./DeleteDialog";
@@ -6,17 +6,22 @@ import { DeleteDialog } from "./DeleteDialog";
 export const ViewBookingCard = ({
   bookingDetails,
   timePeriod,
+  trackChange,
+  setTrackChange,
 }: {
   bookingDetails: BookingDetails;
   timePeriod: string;
+  trackChange: number;
+  setTrackChange: (num: number) => void;
 }) => {
   const deleteBooking = () => {
-    console.log("hey");
-    console.log(bookingDetails.id);
     fetch(`http://localhost:8080/api/bookings/${bookingDetails.id}`, {
       method: "DELETE",
     })
-      .then((response) => console.log(response.json()))
+      .then((response) => {
+        console.log(response);
+        setTrackChange(trackChange + 1);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -42,9 +47,12 @@ export const ViewBookingCard = ({
         </CardContent>
         {timePeriod == "future" && (
           <CardActions>
-            <EditBooking bookingDetails={bookingDetails} />
+            <EditBooking
+              bookingDetails={bookingDetails}
+              trackChange={trackChange}
+              setTrackChange={setTrackChange}
+            />
             <DeleteDialog deleteBooking={deleteBooking} />
-            <Button onClick={deleteBooking}>Delete</Button>
           </CardActions>
         )}
       </Card>

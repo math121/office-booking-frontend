@@ -8,13 +8,7 @@ import {
 import { Office } from "../utils/types";
 import { useNavigate } from "@tanstack/react-router";
 
-export const OfficeCard = ({
-  office,
-  userId,
-}: {
-  office: Office;
-  userId: number | undefined;
-}) => {
+export const OfficeCard = ({ office }: { office: Office }) => {
   const navigate = useNavigate();
   const redirect = () => {
     if (localStorage.getItem("loggedIn") == "false") {
@@ -22,11 +16,11 @@ export const OfficeCard = ({
     } else {
       navigate({
         to: "/newBooking",
-        state: { bookingState: { office: office }, userState: { id: userId } },
+        state: { bookingState: { office: office } },
       });
     }
   };
-  console.log(office);
+
   return (
     <div>
       <Card sx={{ maxWidth: 300 }}>

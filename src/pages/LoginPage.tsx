@@ -18,7 +18,7 @@ export const LoginPage = () => {
       .then((data) => {
         localStorage.setItem("loggedIn", "true");
         localStorage.setItem("userId", data.id);
-        navigate({ to: "/", state: { userState: { id: data.id } } });
+        navigate({ to: "/" });
       });
   };
   return (

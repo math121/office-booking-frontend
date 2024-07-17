@@ -17,9 +17,11 @@ export const UserPage = () => {
 
   const [timePeriod, setTimePeriod] = useState("future");
   const [tabValue, setTabValue] = useState("1");
+  const [trackChange, setTrackChange] = useState(0);
 
   function getBookings() {
-    return fetch(`http://localhost:8080/api/bookings/${timePeriod}/${1}`)
+    const userId = Number(localStorage.getItem("userId"));
+    return fetch(`http://localhost:8080/api/bookings/${timePeriod}/${userId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -28,11 +30,12 @@ export const UserPage = () => {
   }
 
   const { data, isLoading } = useQuery({
-    queryKey: ["myBookings", timePeriod],
+    queryKey: ["myBookings", trackChange, timePeriod],
     queryFn: getBookings,
   });
 
   const tabChange = (event: React.SyntheticEvent, newValue: string) => {
+    console.log(timePeriod);
     setTabValue(newValue);
     if (newValue == "1") {
       setTimePeriod("future");
@@ -57,6 +60,8 @@ export const UserPage = () => {
                 key={value.id}
                 bookingDetails={value}
                 timePeriod={timePeriod}
+                trackChange={trackChange}
+                setTrackChange={setTrackChange}
               />
             ))
           ) : (

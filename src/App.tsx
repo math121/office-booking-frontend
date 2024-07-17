@@ -12,7 +12,6 @@ declare module "@tanstack/react-router" {
 
   interface HistoryState {
     bookingState?: { office: Office };
-    userState?: { id: number | undefined };
   }
 }
 

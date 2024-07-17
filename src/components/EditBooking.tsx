@@ -25,8 +25,12 @@ const dateFormat = "YYYY-MM-DDTHH:mm:ss";
 
 export const EditBooking = ({
   bookingDetails,
+  trackChange,
+  setTrackChange,
 }: {
   bookingDetails: BookingDetails;
+  trackChange: number;
+  setTrackChange: (num: number) => void;
 }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -51,6 +55,7 @@ export const EditBooking = ({
       body: JSON.stringify(editData),
     }).then((response) => {
       console.log(response);
+      setTrackChange(trackChange + 1);
       setOpen(false);
     });
   };
