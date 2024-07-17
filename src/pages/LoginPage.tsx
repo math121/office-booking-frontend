@@ -1,6 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Login } from "../utils/types";
-import loginData from "../utils/login.json";
 import { useNavigate } from "@tanstack/react-router";
 
 export const LoginPage = () => {
@@ -17,8 +16,8 @@ export const LoginPage = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        loginData.loggedIn = true;
-        console.log("logged in");
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("userId", data.id);
         navigate({ to: "/", state: { userState: { id: data.id } } });
       });
   };

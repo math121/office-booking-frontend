@@ -6,7 +6,6 @@ import {
   Button,
 } from "@mui/material";
 import { Office } from "../utils/types";
-import loginData from "../utils/login.json";
 import { useNavigate } from "@tanstack/react-router";
 
 export const OfficeCard = ({
@@ -18,7 +17,7 @@ export const OfficeCard = ({
 }) => {
   const navigate = useNavigate();
   const redirect = () => {
-    if (loginData.loggedIn == false) {
+    if (localStorage.getItem("loggedIn") == "false") {
       navigate({ to: "/login" });
     } else {
       navigate({

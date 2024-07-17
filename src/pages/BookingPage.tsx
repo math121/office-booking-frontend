@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import { useRouterState } from "@tanstack/react-router";
 import { PostBooking } from "../utils/types";
 import { useEffect } from "react";
-import loginData from "../utils/login.json";
 import { useNavigate } from "@tanstack/react-router";
 
 const dateFormat = "YYYY-MM-DDTHH:mm:ss";
@@ -17,11 +16,11 @@ export const BookingPage = () => {
     select: (s) => s.location.state.bookingState?.office,
   });
 
-  const userId = useRouterState({
-    select: (s) => s.location.state.userState?.id,
-  });
-
-  const { control, handleSubmit } = useForm<PostBooking>();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PostBooking>();
 
   const submitBooking: SubmitHandler<PostBooking> = (data) => {
     const startDate = dayjs(data.startDate).format(dateFormat);
@@ -31,7 +30,7 @@ export const BookingPage = () => {
       startDate: startDate,
       endDate: endDate,
       officeId: office?.id,
-      userId: userId,
+      userId: Number(localStorage.getItem("userId")),
     };
 
     fetch("http://localhost:8080/api/bookings", {
@@ -40,14 +39,19 @@ export const BookingPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(postData),
-    }).then(console.log);
+    }).then((response) => {
+      console.log(response);
+      navigate({ to: "/myPage" });
+    });
   };
 
   useEffect(() => {
-    if (loginData.loggedIn == false) {
+    if (localStorage.getItem("loggedIn") == "false") {
       navigate({ to: "/login" });
     }
   }, []);
+
+  console.log(errors);
 
   return (
     <div className="p-8 md:flex gap-20">
@@ -66,7 +70,10 @@ export const BookingPage = () => {
             name="startDate"
             render={({ field }) => (
               <DateTimePicker
+                ampm={false}
+                disablePast={true}
                 label="Start date"
+                format="DD/MM/YYYY hh:mm"
                 onChange={(startDate) => field.onChange(startDate)}
               />
             )}
@@ -76,7 +83,10 @@ export const BookingPage = () => {
             name="endDate"
             render={({ field }) => (
               <DateTimePicker
+                ampm={false}
+                disablePast={true}
                 label="End date"
+                format="DD/MM/YYYY hh:mm"
                 onChange={(endDate) => field.onChange(endDate)}
               />
             )}

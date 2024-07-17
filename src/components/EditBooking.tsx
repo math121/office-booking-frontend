@@ -75,6 +75,10 @@ export const EditBooking = ({
                 render={({ field }) => (
                   <DateTimePicker
                     label="Start date"
+                    format="DD/MM/YYYY hh:mm"
+                    ampm={false}
+                    disablePast={true}
+                    disabled={dayjs(bookingDetails.startDate) < dayjs()}
                     defaultValue={dayjs(bookingDetails.startDate)}
                     onChange={(startDate) => field.onChange(startDate)}
                   />
@@ -86,6 +90,9 @@ export const EditBooking = ({
                 render={({ field }) => (
                   <DateTimePicker
                     label="End date"
+                    format="DD/MM/YYYY hh:mm"
+                    ampm={false}
+                    disablePast={true}
                     defaultValue={dayjs(bookingDetails.endDate)}
                     onChange={(endDate) => field.onChange(endDate)}
                   />
