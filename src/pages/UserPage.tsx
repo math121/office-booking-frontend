@@ -6,6 +6,7 @@ import { ViewBookingCard } from "../components/ViewBookingCard";
 import { Tab } from "@mui/material";
 import { TabList, TabContext, TabPanel } from "@mui/lab";
 import { SearchBar } from "../components/SearchBar";
+import { ToastContainer } from "react-toastify";
 
 const BASE_URL_BOOKING = "http://localhost:8080/api/bookings";
 
@@ -84,6 +85,7 @@ export const UserPage = () => {
           )}
         </TabPanel>
       </TabContext>
+      <ToastContainer />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { PostBooking } from "../utils/types";
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@mui/material";
+import { toastSuccess } from "../components/ToastFeedback";
 
 const dateFormat = "YYYY-MM-DDTHH:mm:ss";
 
@@ -46,6 +47,9 @@ export const BookingPage = () => {
     }).then((response) => {
       console.log(response);
       navigate({ to: "/myPage" });
+      setTimeout(() => {
+        toastSuccess("Booking has been made");
+      }, 1);
     });
   };
 

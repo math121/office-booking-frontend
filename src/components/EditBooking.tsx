@@ -9,6 +9,7 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DateEdit } from "../utils/types";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { toastSuccess } from "./ToastFeedback";
 
 const style = {
   borderRadius: "16px",
@@ -65,6 +66,7 @@ export const EditBooking = ({
       console.log(response);
       setTrackChange(trackChange + 1);
       setOpen(false);
+      toastSuccess("Updated booking");
     });
   };
 

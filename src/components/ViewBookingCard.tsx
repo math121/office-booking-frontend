@@ -2,6 +2,7 @@ import { Card, CardActions, CardContent } from "@mui/material";
 import { BookingDetails } from "../utils/types";
 import { EditBooking } from "./EditBooking";
 import { DeleteDialog } from "./DeleteDialog";
+import { toastSuccess } from "./ToastFeedback";
 
 export const ViewBookingCard = ({
   bookingDetails,
@@ -21,6 +22,7 @@ export const ViewBookingCard = ({
       .then((response) => {
         console.log(response);
         setTrackChange(trackChange + 1);
+        toastSuccess("Deleted booking");
       })
       .catch((err) => console.log(err));
   };
