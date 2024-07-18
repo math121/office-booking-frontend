@@ -86,7 +86,7 @@ export const BookingPage = () => {
         <h1>{office?.officeName}</h1>
         <p>{office?.description}</p>
         <img
-          src={office?.image}
+          src={office?.image || "src/assets/placeholder.png"}
           alt="office pic"
           className="object-contain h-64 w-full pt-3"
         />
