@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { toastError } from "../components/ToastFeedback";
 import { TextField, Button } from "@mui/material";
 import { Link } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -35,6 +36,11 @@ export const LoginPage = () => {
         toastError(err.message);
       });
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <form

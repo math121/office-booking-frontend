@@ -5,6 +5,8 @@ import { toastError, toastSuccess } from "../components/ToastFeedback";
 import { TextField, Button } from "@mui/material";
 import { Link } from "@tanstack/react-router";
 import { Radio, RadioGroup, FormControlLabel, FormLabel } from "@mui/material";
+import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
@@ -16,7 +18,6 @@ export const SignUpPage = () => {
   } = useForm<Login>();
 
   const signUp: SubmitHandler<Login> = (data) => {
-    console.log(data);
     fetch(`http://localhost:8080/user/signUp`, {
       method: "POST",
       headers: {
@@ -48,6 +49,11 @@ export const SignUpPage = () => {
         toastError(err.message);
       });
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <form
@@ -115,6 +121,7 @@ export const SignUpPage = () => {
         </Button>
         <Link to="/login">Back to login</Link>
       </form>
+      <ToastContainer />
     </>
   );
 };

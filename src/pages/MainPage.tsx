@@ -5,6 +5,7 @@ import { SearchBar } from "../components/SearchBar";
 import { useState } from "react";
 import { LoadingFailPage } from "../components/LoadingFailPage";
 import { ToastContainer } from "react-toastify";
+import { useEffect } from "react";
 
 const BASE_URL_OFFICE = "http://localhost:8080/api/offices";
 
@@ -28,6 +29,10 @@ export const MainPage = () => {
     queryFn: getAllOffices,
   });
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="p-8">
       <div className="flex justify-between">
@@ -35,7 +40,7 @@ export const MainPage = () => {
         <SearchBar setFilterWord={setFilterWord} />
       </div>
 
-      <div className="grid auto-rows-fr gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
         {!isLoading &&
           !isError &&
           data &&

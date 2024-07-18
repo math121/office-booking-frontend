@@ -37,6 +37,7 @@ export const RegisterOffice = () => {
   };
 
   useEffect(() => {
+    window.scroll(0, 0);
     if (localStorage.getItem("loggedIn") == "false") {
       navigate({ to: "/login" });
     }
@@ -44,7 +45,7 @@ export const RegisterOffice = () => {
   }, []);
 
   return (
-    <div className="mx-40">
+    <div className="mx-80">
       <h1>Register new Office</h1>
       <form
         onSubmit={handleSubmit(registerOffice)}

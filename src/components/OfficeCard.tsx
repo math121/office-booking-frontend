@@ -22,31 +22,40 @@ export const OfficeCard = ({ office }: { office: Office }) => {
   };
 
   return (
-    <div>
-      <Card sx={{ maxWidth: 400 }}>
-        <CardMedia
-          title="Office pic"
-          component="img"
-          height="250"
-          image={office.image || "src/assets/placeholder.png"}
-          alt="Picture of office space"
-        />
-        <CardContent>
-          <h3>{office.officeName}</h3>
-          <p>
-            <strong>Location:</strong> {office.location}
-          </p>
-          <p>{office.description}</p>
-        </CardContent>
+    <>
+      <Card
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>
+          <CardMedia
+            title="Office pic"
+            component="img"
+            height="200"
+            image={office.image || "src/assets/placeholder.png"}
+            alt="Picture of office space"
+          />
+          <CardContent>
+            <h3>{office.officeName}</h3>
+            <p>
+              <strong>Location:</strong> {office.location}
+            </p>
+            <p className="m-0">{office.description}</p>
+          </CardContent>
+        </div>
+
         <CardActions>
           <Button
             variant="contained"
             style={{ backgroundColor: "#1E1B1A" }}
             sx={{
               marginLeft: "auto",
-              marginTop: "auto",
-              marginRight: 2,
-              marginBottom: 2,
+              marginBottom: 1,
+              marginRight: 1,
             }}
             onClick={redirect}
           >
@@ -54,6 +63,6 @@ export const OfficeCard = ({ office }: { office: Office }) => {
           </Button>
         </CardActions>
       </Card>
-    </div>
+    </>
   );
 };

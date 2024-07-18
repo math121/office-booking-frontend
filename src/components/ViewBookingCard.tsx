@@ -39,11 +39,13 @@ export const ViewBookingCard = ({
             </div>
             <div className="flex  gap-2">
               <p className="font-bold">From: </p>
-              <p>{new Date(bookingDetails.startDate).toLocaleString()}</p>
+              <p>
+                {new Date(bookingDetails.startDate).toLocaleString("en-GB")}
+              </p>
             </div>
             <div className="flex  gap-2">
               <p className="font-bold">To: </p>
-              <p>{new Date(bookingDetails.endDate).toLocaleString()}</p>
+              <p>{new Date(bookingDetails.endDate).toLocaleString("en-GB")}</p>
             </div>
           </div>
         </CardContent>

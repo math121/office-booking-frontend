@@ -16,6 +16,7 @@ export const UserPage = () => {
   const [filterLocation, setFilterLocation] = useState("");
 
   useEffect(() => {
+    window.scroll(0, 0);
     if (localStorage.getItem("loggedIn") == "false") {
       navigate({ to: "/login" });
     }

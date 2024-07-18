@@ -61,6 +61,7 @@ export const BookingPage = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (localStorage.getItem("loggedIn") == "false") {
       navigate({ to: "/login" });
     } else {
@@ -93,7 +94,7 @@ export const BookingPage = () => {
       </div>
       <form
         onSubmit={handleSubmit(submitBooking)}
-        className="flex flex-col justify-center gap-3"
+        className="flex flex-col gap-3 pt-20 w-2/6"
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Controller
@@ -113,7 +114,7 @@ export const BookingPage = () => {
                 disablePast={true}
                 label="Start date"
                 ampm={false}
-                format="DD/MM/YYYY hh:mm A"
+                format="DD/MM/YYYY HH:mm"
                 onChange={(startDate) => {
                   field.onChange(startDate);
                   setStartDate(startDate);
@@ -145,7 +146,7 @@ export const BookingPage = () => {
                 disablePast={true}
                 label="End date"
                 ampm={false}
-                format="DD/MM/YYYY hh:mm A"
+                format="DD/MM/YYYY HH:mm"
                 onChange={(endDate) => {
                   field.onChange(endDate);
                 }}
