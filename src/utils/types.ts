@@ -31,3 +31,10 @@ export type DateEdit = {
   startDate: string;
   endDate: string;
 };
+
+export type PostOffice = {
+  officeName: string;
+  location: string;
+  description: string;
+  image: string;
+};

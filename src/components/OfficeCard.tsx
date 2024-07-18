@@ -25,9 +25,11 @@ export const OfficeCard = ({ office }: { office: Office }) => {
     <div>
       <Card sx={{ maxWidth: 400 }}>
         <CardMedia
-          sx={{ height: 250 }}
           title="Office pic"
-          image={office.image}
+          component="img"
+          height="250"
+          image={office.image || "src/assets/placeholder.png"}
+          alt="Picture of office space"
         />
         <CardContent>
           <h3>{office.officeName}</h3>
