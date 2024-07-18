@@ -25,11 +25,11 @@ export const Navigation = () => {
               </Link>
             ) : (
               <Link
+                to="/login"
                 className="no-underline text-white"
                 onClick={() => {
                   localStorage.setItem("loggedIn", "false");
                   localStorage.removeItem("userId");
-                  location.reload();
                 }}
               >
                 Log out

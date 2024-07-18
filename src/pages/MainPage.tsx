@@ -4,6 +4,7 @@ import { Office } from "../utils/types";
 import { SearchBar } from "../components/SearchBar";
 import { useState } from "react";
 import { LoadingFailPage } from "../components/LoadingFailPage";
+import { ToastContainer } from "react-toastify";
 
 const BASE_URL_OFFICE = "http://localhost:8080/api/offices";
 
@@ -45,6 +46,7 @@ export const MainPage = () => {
         {isLoading && <LoadingFailPage message="Loading..." />}
         {isError && <LoadingFailPage message="Failed to fetch" />}
       </div>
+      <ToastContainer />
     </div>
   );
 };

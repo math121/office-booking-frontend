@@ -104,7 +104,6 @@ export const EditBooking = ({
                   <DateTimePicker
                     label="Start date"
                     format="DD/MM/YYYY hh:mm"
-                    ampm={false}
                     disablePast={true}
                     disabled={dayjs(bookingDetails.startDate) < dayjs()}
                     defaultValue={dayjs(bookingDetails.startDate)}

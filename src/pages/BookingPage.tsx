@@ -19,6 +19,7 @@ export const BookingPage = () => {
   });
 
   const [startDate, setStartDate] = useState<Dayjs | null>();
+  const [bookedDates, setBookedDates] = useState([]);
 
   const {
     control,
@@ -53,15 +54,27 @@ export const BookingPage = () => {
     });
   };
 
+  const getBookedDatesForOffice = () => {
+    fetch(`http://localhost:8080/api/bookings/bookedDates/${office?.id}`)
+      .then((response) => response.json())
+      .then((data) => setBookedDates(data));
+  };
+
   useEffect(() => {
     if (localStorage.getItem("loggedIn") == "false") {
       navigate({ to: "/login" });
+    } else {
+      getBookedDatesForOffice();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(bookedDates);
+
+  const getDisabledDates = () => {};
+
   return (
-    <div className="p-8 md:flex gap-10">
+    <div className="p-8 md:flex gap-28">
       <div className="w-5/12">
         <h1>{office?.officeName}</h1>
         <p>{office?.description}</p>
@@ -73,7 +86,7 @@ export const BookingPage = () => {
       </div>
       <form
         onSubmit={handleSubmit(submitBooking)}
-        className="flex flex-col justify-end"
+        className="flex flex-col justify-center gap-3"
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Controller
@@ -100,9 +113,9 @@ export const BookingPage = () => {
               />
             )}
           />
-          <p className="text-red-600">
+          <span className="text-red-600">
             {errors.startDate && errors.startDate.message}
-          </p>
+          </span>
           <Controller
             control={control}
             name="endDate"
@@ -129,9 +142,9 @@ export const BookingPage = () => {
               />
             )}
           />
-          <p className="text-red-600">
+          <span className="text-red-600">
             {errors.endDate && errors.endDate.message}
-          </p>
+          </span>
         </LocalizationProvider>
 
         <Button

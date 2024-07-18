@@ -1,12 +1,11 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Login } from "../utils/types";
 import { useNavigate } from "@tanstack/react-router";
-import { ToastContainer } from "react-toastify";
-import { toastError } from "../components/ToastFeedback";
+import { toastError, toastSuccess } from "../components/ToastFeedback";
 import { TextField, Button } from "@mui/material";
 import { Link } from "@tanstack/react-router";
 
-export const LoginPage = () => {
+export const SignUpPage = () => {
   const navigate = useNavigate();
   const {
     register,
@@ -14,16 +13,27 @@ export const LoginPage = () => {
     formState: { errors },
   } = useForm<Login>();
 
-  const login: SubmitHandler<Login> = (data) => {
-    fetch(
-      `http://localhost:8080/user/login?username=${data.username}&password=${data.password}`
-    )
+  const signUp: SubmitHandler<Login> = (data) => {
+    fetch(`http://localhost:8080/user/signUp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: data.username,
+        password: data.password,
+      }),
+    })
       .then((response) => response.json())
       .then((data) => {
         if ((data.status && data.status == 200) || data.id) {
           localStorage.setItem("loggedIn", "true");
           localStorage.setItem("userId", data.id);
           navigate({ to: "/" });
+          setTimeout(() => {
+            console.log("wtf");
+            toastSuccess("Successfully signed up!");
+          }, 1);
         } else if (data.error) {
           toastError(data.error);
         } else {
@@ -37,10 +47,10 @@ export const LoginPage = () => {
   return (
     <>
       <form
-        onSubmit={handleSubmit(login)}
+        onSubmit={handleSubmit(signUp)}
         className="flex flex-col items-center gap-4"
       >
-        <h1>Log in to book offices</h1>
+        <h1>Sign up</h1>
         <TextField
           placeholder="Username"
           type="text"
@@ -64,11 +74,10 @@ export const LoginPage = () => {
           variant="contained"
           style={{ backgroundColor: "#1E1B1A" }}
         >
-          Log in
+          Sign up
         </Button>
-        <Link to="/signUp">Not a user? Sign up here</Link>
+        <Link to="/login">Back to login</Link>
       </form>
-      <ToastContainer />
     </>
   );
 };
