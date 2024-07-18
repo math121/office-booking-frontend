@@ -3,7 +3,7 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import { useRouterState } from "@tanstack/react-router";
-import { PostBooking } from "../utils/types";
+import { DateEdit, PostBooking } from "../utils/types";
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@mui/material";
@@ -19,7 +19,7 @@ export const BookingPage = () => {
   });
 
   const [startDate, setStartDate] = useState<Dayjs | null>();
-  const [bookedDates, setBookedDates] = useState([]);
+  const [bookedDates, setBookedDates] = useState<DateEdit[]>([]);
 
   const {
     control,
@@ -69,9 +69,16 @@ export const BookingPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(bookedDates);
-
-  const getDisabledDates = () => {};
+  const bookedDatesCheck = (val: string) => {
+    for (let i = 0; i < bookedDates.length; i++) {
+      if (
+        dayjs(val).isAfter(dayjs(bookedDates[i].startDate)) &&
+        dayjs(val).isBefore(dayjs(bookedDates[i].endDate))
+      ) {
+        return "Office is already booked within this time period";
+      }
+    }
+  };
 
   return (
     <div className="p-8 md:flex gap-28">
@@ -97,15 +104,16 @@ export const BookingPage = () => {
               validate: {
                 validDateCheck: (val) => dayjs(val).isValid() || "Invalid date",
                 pastDateCheck: (val) =>
-                  !dayjs(val).isBefore(dayjs()) || "Cannot choose past dates",
+                  !dayjs(val).isBefore(dayjs()) ||
+                  "Cannot choose past dates and time",
               },
             }}
             render={({ field }) => (
               <DateTimePicker
-                ampm={false}
                 disablePast={true}
                 label="Start date"
-                format="DD/MM/YYYY hh:mm"
+                ampm={false}
+                format="DD/MM/YYYY hh:mm A"
                 onChange={(startDate) => {
                   field.onChange(startDate);
                   setStartDate(startDate);
@@ -124,18 +132,20 @@ export const BookingPage = () => {
               validate: {
                 validDateCheck: (val) => dayjs(val).isValid() || "Invalid date",
                 pastDateCheck: (val) =>
-                  !dayjs(val).isBefore(dayjs()) || "Cannot choose past dates",
+                  !dayjs(val).isBefore(dayjs()) ||
+                  "Cannot choose past dates and time",
                 dateAfterStartDate: (val) =>
                   (startDate != null && dayjs(val).isAfter(dayjs(startDate))) ||
                   "End date must be after start date",
+                validateBookedDates: (val) => bookedDatesCheck(val),
               },
             }}
             render={({ field }) => (
               <DateTimePicker
-                ampm={false}
                 disablePast={true}
                 label="End date"
-                format="DD/MM/YYYY hh:mm"
+                ampm={false}
+                format="DD/MM/YYYY hh:mm A"
                 onChange={(endDate) => {
                   field.onChange(endDate);
                 }}

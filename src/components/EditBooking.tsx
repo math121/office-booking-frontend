@@ -32,19 +32,23 @@ export const EditBooking = ({
   trackChange: number;
   setTrackChange: (num: number) => void;
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const [startDate, setStartDate] = useState<Dayjs>(
-    dayjs(bookingDetails.startDate)
-  );
-
   const {
     control,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm<DateEdit>();
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    clearErrors("endDate");
+  };
+
+  const [startDate, setStartDate] = useState<Dayjs>(
+    dayjs(bookingDetails.startDate)
+  );
 
   const saveBooking: SubmitHandler<DateEdit> = (data) => {
     console.log(data);
@@ -103,8 +107,9 @@ export const EditBooking = ({
                 render={({ field }) => (
                   <DateTimePicker
                     label="Start date"
-                    format="DD/MM/YYYY hh:mm"
+                    format="DD/MM/YYYY hh:mm A"
                     disablePast={true}
+                    ampm={false}
                     disabled={dayjs(bookingDetails.startDate) < dayjs()}
                     defaultValue={dayjs(bookingDetails.startDate)}
                     onChange={(startDate) => {
@@ -125,7 +130,7 @@ export const EditBooking = ({
                       dayjs(val).isValid() || "Invalid date",
                     pastDateCheck: (val) =>
                       !dayjs(val).isBefore(dayjs()) ||
-                      "Cannot choose past dates",
+                      "Cannot choose past dates and time",
                     dateAfterStartDate: (val) =>
                       dayjs(val).isAfter(startDate) ||
                       "End date must be after start date",
@@ -134,15 +139,17 @@ export const EditBooking = ({
                 render={({ field }) => (
                   <DateTimePicker
                     label="End date"
-                    format="DD/MM/YYYY hh:mm"
                     ampm={false}
+                    format="DD/MM/YYYY hh:mm A"
                     disablePast={true}
                     defaultValue={dayjs(bookingDetails.endDate)}
                     onChange={(endDate) => field.onChange(endDate)}
                   />
                 )}
               />
-              {errors.endDate && <p>{errors.endDate.message}</p>}
+              <span className="text-red-600">
+                {errors.endDate && errors.endDate.message}
+              </span>
             </LocalizationProvider>
             <div className="flex gap-24">
               <Button
@@ -154,7 +161,10 @@ export const EditBooking = ({
                 Save
               </Button>
               <Button
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  clearErrors("endDate");
+                }}
                 variant="contained"
                 style={{ backgroundColor: "#1E1B1A" }}
                 sx={{ width: 1 }}
