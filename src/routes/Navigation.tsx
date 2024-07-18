@@ -9,7 +9,7 @@ export const Navigation = () => {
           <Link className="no-underline text-white" to="/">
             <div className="flex">
               <BusinessIcon sx={{ fontSize: 40 }} className="pr-2" />
-              <p>Office Booking Logo</p>
+              <p>OfficeBook</p>
             </div>
           </Link>
 
