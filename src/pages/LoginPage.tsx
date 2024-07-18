@@ -23,6 +23,7 @@ export const LoginPage = () => {
         if ((data.status && data.status == 200) || data.id) {
           localStorage.setItem("loggedIn", "true");
           localStorage.setItem("userId", data.id);
+          localStorage.setItem("role", data.role);
           navigate({ to: "/" });
         } else if (data.error) {
           toastError(data.error);

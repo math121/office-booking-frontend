@@ -9,6 +9,7 @@ export type Office = {
 export type Login = {
   username: string;
   password: string;
+  role: string;
 };
 
 export type PostBooking = {

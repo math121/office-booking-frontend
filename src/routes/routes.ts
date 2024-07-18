@@ -5,6 +5,7 @@ import { Navigation } from "./Navigation";
 import { BookingPage } from "../pages/BookingPage";
 import { UserPage } from "../pages/UserPage";
 import { SignUpPage } from "../pages/SignUpPage";
+import { RegisterOffice } from "../pages/RegisterOffice";
 
 const rootRoute = createRootRoute({
   component: Navigation,
@@ -40,10 +41,17 @@ const signUpPage = createRoute({
   component: SignUpPage,
 });
 
+const registerOfficePage = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/register",
+  component: RegisterOffice,
+});
+
 export const routeTree = rootRoute.addChildren({
   mainPage,
   loginPage,
   bookingPage,
   userPage,
   signUpPage,
+  registerOfficePage,
 });

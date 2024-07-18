@@ -14,6 +14,12 @@ export const Navigation = () => {
           </Link>
 
           <div className="flex gap-8 mr-5">
+            {localStorage.getItem("loggedIn") == "true" &&
+              localStorage.getItem("role") == "REGISTRANT" && (
+                <Link className="no-underline text-white" to="/register">
+                  Register
+                </Link>
+              )}
             {localStorage.getItem("loggedIn") == "true" && (
               <Link className="no-underline text-white" to="/myPage">
                 My Bookings
@@ -30,6 +36,7 @@ export const Navigation = () => {
                 onClick={() => {
                   localStorage.setItem("loggedIn", "false");
                   localStorage.removeItem("userId");
+                  localStorage.removeItem("role");
                 }}
               >
                 Log out
