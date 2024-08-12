@@ -32,7 +32,7 @@ export const ViewBookingCard = ({
       <Card className="p-3" sx={{ borderLeft: 2 }}>
         <CardContent>
           <h3>{bookingDetails.office.officeName}</h3>
-          <div className="flex gap-10">
+          <div className="lg:flex lg:gap-10">
             <div className="flex gap-2">
               <p className="font-bold">Location: </p>
               <p>{bookingDetails.office.location}</p>

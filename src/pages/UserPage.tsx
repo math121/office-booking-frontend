@@ -68,7 +68,11 @@ export const UserPage = () => {
       </div>
 
       <TabContext value={tabValue}>
-        <TabList onChange={tabChange}>
+        <TabList
+          TabIndicatorProps={{ sx: { backgroundColor: "gray" } }}
+          textColor="inherit"
+          onChange={tabChange}
+        >
           <Tab label="Current bookings" value="1"></Tab>
           <Tab label="Previous bookings" value="2"></Tab>
         </TabList>

@@ -49,22 +49,20 @@ export const LoginPage = () => {
       >
         <h1>Log in to book offices</h1>
         <TextField
+          error={!!errors.username}
+          helperText={!!errors.username && "This field is required"}
           placeholder="Username"
           type="text"
           {...register("username", { required: true })}
         />
-        {errors.username && (
-          <span className="text-red-600">This field is required</span>
-        )}
 
         <TextField
+          error={!!errors.password}
+          helperText={!!errors.password && "This field is required"}
           placeholder="Password"
           type="password"
           {...register("password", { required: true })}
         />
-        {errors.password && (
-          <span className="text-red-600">This field is required</span>
-        )}
 
         <Button
           type="submit"

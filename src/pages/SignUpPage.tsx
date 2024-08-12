@@ -2,7 +2,7 @@ import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { Login } from "../utils/types";
 import { useNavigate } from "@tanstack/react-router";
 import { toastError, toastSuccess } from "../components/ToastFeedback";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, FormHelperText } from "@mui/material";
 import { Link } from "@tanstack/react-router";
 import { Radio, RadioGroup, FormControlLabel, FormLabel } from "@mui/material";
 import { useEffect } from "react";
@@ -62,22 +62,20 @@ export const SignUpPage = () => {
       >
         <h1>Sign up</h1>
         <TextField
+          error={!!errors.username}
+          helperText={errors.username != undefined && "This field is required"}
           placeholder="Username"
           type="text"
           {...register("username", { required: true })}
         />
-        {errors.username && (
-          <span className="text-red-600">This field is required</span>
-        )}
 
         <TextField
+          error={!!errors.password}
+          helperText={errors.password != undefined && "This field is required"}
           placeholder="Password"
           type="password"
           {...register("password", { required: true })}
         />
-        {errors.password && (
-          <span className="text-red-600">This field is required</span>
-        )}
 
         <Controller
           control={control}
@@ -105,12 +103,12 @@ export const SignUpPage = () => {
                   label="Registrant"
                 />
               </RadioGroup>
+              <FormHelperText error={!!errors.role}>
+                {!!errors.role && "Choose a role"}
+              </FormHelperText>
             </div>
           )}
         />
-        <span className="text-red-600">
-          {errors.role && errors.role.message}
-        </span>
 
         <Button
           type="submit"
