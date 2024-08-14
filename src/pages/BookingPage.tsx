@@ -8,6 +8,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@mui/material";
 import { toastSuccess } from "../components/ToastFeedback";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 
 const dateFormat = "YYYY-MM-DDTHH:mm:ss";
 
@@ -94,7 +98,7 @@ export const BookingPage = () => {
       </div>
       <form
         onSubmit={handleSubmit(submitBooking)}
-        className="flex flex-col gap-3 pt-20 w-2/6"
+        className="flex flex-col gap-3 pt-20"
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Controller
@@ -175,6 +179,16 @@ export const BookingPage = () => {
         >
           Book now
         </Button>
+
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            left: "prev next today",
+            center: "title",
+            right: "dayGridMonth timeGridWeek",
+          }}
+        />
       </form>
     </div>
   );
