@@ -12,6 +12,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { createBookingId } from "../utils/bookingsTracker";
 
 const dateFormat = "YYYY-MM-DDTHH:mm:ss";
 
@@ -24,6 +25,7 @@ export const BookingPage = () => {
 
   const [startDate, setStartDate] = useState<Dayjs | null>();
   const [bookedDates, setBookedDates] = useState<DateEdit[]>([]);
+  const [bookingEvents, setBookingEvents] = useState([]);
 
   const {
     control,
@@ -83,6 +85,26 @@ export const BookingPage = () => {
         return "Office is already booked within this time period";
       }
     }
+  };
+
+  const addNewBookingEvent = (selectedDates) => {
+    const title = prompt("Give a name to your booking");
+    const calenderApi = selectedDates.view.calendar;
+
+    calenderApi.unselect();
+
+    if (title) {
+      calenderApi.addEvent({
+        id: createBookingId(),
+        title,
+        start: selectedDates.startStr,
+        end: selectedDates.endStr,
+      });
+    }
+  };
+
+  const handleAllBookingEvents = (events) => {
+    setBookingEvents(events);
   };
 
   return (
@@ -188,6 +210,9 @@ export const BookingPage = () => {
             center: "title",
             right: "dayGridMonth timeGridWeek",
           }}
+          selectable={true}
+          select={addNewBookingEvent}
+          eventsSet={handleAllBookingEvents}
         />
       </form>
     </div>
