@@ -8,11 +8,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@mui/material";
 import { toastSuccess } from "../components/ToastFeedback";
-import FullCalendar from "@fullcalendar/react";
+/*import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { createBookingId } from "../utils/bookingsTracker";
+import { createBookingId } from "../utils/bookingsTracker";*/
 
 const dateFormat = "YYYY-MM-DDTHH:mm:ss";
 
@@ -25,7 +25,7 @@ export const BookingPage = () => {
 
   const [startDate, setStartDate] = useState<Dayjs | null>();
   const [bookedDates, setBookedDates] = useState<DateEdit[]>([]);
-  const [bookingEvents, setBookingEvents] = useState([]);
+  //const [bookingEvents, setBookingEvents] = useState([]);
 
   const {
     control,
@@ -87,7 +87,8 @@ export const BookingPage = () => {
     }
   };
 
-  const addNewBookingEvent = (selectedDates) => {
+  {
+    /*const addNewBookingEvent = (selectedDates) => {
     const title = prompt("Give a name to your booking");
     const calenderApi = selectedDates.view.calendar;
 
@@ -105,7 +106,8 @@ export const BookingPage = () => {
 
   const handleAllBookingEvents = (events) => {
     setBookingEvents(events);
-  };
+  };*/
+  }
 
   return (
     <div className="p-8 md:flex gap-28">
@@ -120,7 +122,7 @@ export const BookingPage = () => {
       </div>
       <form
         onSubmit={handleSubmit(submitBooking)}
-        className="flex flex-col gap-3 pt-20"
+        className="flex flex-col gap-3 pt-20 w-2/6"
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Controller
@@ -202,7 +204,7 @@ export const BookingPage = () => {
           Book now
         </Button>
 
-        <FullCalendar
+        {/*<FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           headerToolbar={{
@@ -213,7 +215,7 @@ export const BookingPage = () => {
           selectable={true}
           select={addNewBookingEvent}
           eventsSet={handleAllBookingEvents}
-        />
+        />*/}
       </form>
     </div>
   );
